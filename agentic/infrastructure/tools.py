@@ -1,8 +1,6 @@
 import httpx
 from typing import Dict, Any, List
 
-# --- Tool Implementations (Python Logic) ---
-# We add explicit type casting (float(a)) because small models often send numbers as strings.
 
 async def get_weather(latitude: Any, longitude: Any) -> str:
     """Fetches current weather for coordinates."""
@@ -92,7 +90,6 @@ AVAILABLE_FUNCTIONS = {
     'subtraction': subtraction,
 }
 
-# --- Tool Definitions (JSON Schemas for Ollama) ---
 
 TOOLS = [
     {
