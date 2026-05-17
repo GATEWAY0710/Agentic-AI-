@@ -14,11 +14,11 @@ class SessionEntity(Base):
 
 class MessageEntity(Base):
     __tablename__ = "messages"
-    
+
     id = Column(Integer, primary_key=True, autoincrement=True)
-    session_id = Column(Integer, ForeignKey("chat_sessions.id"))
+    session_id = Column(Integer, ForeignKey("chat_sessions.id"), index=True) # Added index
     role = Column(String(50)) 
     content = Column(Text)
     created_at = Column(DateTime, default=datetime.utcnow)
-    
+
     session = relationship("SessionEntity", back_populates="messages")

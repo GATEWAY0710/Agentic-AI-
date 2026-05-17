@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import StreamingResponse
 from agentic.infrastructure.dependency import container
 from agentic.application.service_interface import IChatService
 
@@ -17,5 +18,9 @@ async def list_sessions():
 @router.post("/{session_id}/message")
 async def send_message(session_id: int, message: str):
     chat_service: IChatService = container.chat_service()
-    reply = await chat_service.handle_user_message(session_id, message)
-    return {"reply": reply}
+    
+    # Return a stream instead of a JSON response
+    return StreamingResponse(
+        chat_service.handle_user_message_stream(session_id, message),
+        media_type="text/plain"
+    )
